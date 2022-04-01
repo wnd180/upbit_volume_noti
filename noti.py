@@ -9,8 +9,8 @@ def post_message(token, channel, text):
         data={"channel": channel,"text": text}
     )
 
-def start(coin,price):
-    noti_message = "---------------------------------\n\n"+"유의 코인 : "+ str(coin)+"\n\n" + "1분봉 가격 상승률 : " + str(price)
+def start(coin,priceUp,close_price):
+    noti_message = "---------------------------------\n\n"+"유의 코인 : "+ str(coin)+"\n\n" + "1분봉 가격 상승률 : " + str(priceUp)+"\n\n"+"현재가 : "+str(close_price)
     post_message(myToken,"volume_noti",noti_message)
 
 
@@ -30,8 +30,7 @@ while 1:
             open_price = df.iloc[0]['open']
             close_price = df.iloc[0]['close']
             priceUp = (close_price-open_price)/open_price*100
-
             if priceUp>2:
-                start(krw_tickers[i],priceUp)
+                start(krw_tickers[i],priceUp,close_price)
         except Exception as e:
             print(e)
